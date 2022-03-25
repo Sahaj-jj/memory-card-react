@@ -1,19 +1,16 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useState } from 'react';
+import React from 'react';
 
-function Card({ name, handleClick }) {
-  const [isClicked, setIsClicked] = useState(false);
-
+function Card({ name, id, handleClick }) {
   const handleCardClick = () => {
-    setIsClicked(true);
-    handleClick();
+    handleClick(id);
   };
 
   return (
     <div className="card" onClick={handleCardClick}>
       <div>
-        {isClicked ? `${name} is clicked` : `${name} is not clicked`}
+        {name}
       </div>
     </div>
   );
