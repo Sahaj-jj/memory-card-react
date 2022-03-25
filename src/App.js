@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import Card from './components/Card';
-import Scoreboard from './components/Scoreboard';
+import Header from './components/Header';
 import fetchImages from './fetchImages';
 import { shuffleArray, sampleArrayFromRange } from './utils';
 
@@ -13,8 +13,10 @@ function App() {
   const [cards, setCards] = useState(cardsArray);
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(async () => {
+    setLoading(true);
     const cardsList = await fetchImages(url, idArray);
     setCards(cardsList.map((character) => ({
       name: character.name,
@@ -22,6 +24,7 @@ function App() {
       image: character.image,
       isClicked: false,
     })));
+    setLoading(false);
   }, []);
 
   const reset = () => {
@@ -51,9 +54,9 @@ function App() {
 
   return (
     <div className="main">
-      <Scoreboard score={score} bestScore={bestScore} />
+      <Header score={score} bestScore={bestScore} />
       <div className="cards-container">
-        {renderCards()}
+        {loading ? <div className="loading">Loading...</div> : renderCards()}
       </div>
     </div>
   );
